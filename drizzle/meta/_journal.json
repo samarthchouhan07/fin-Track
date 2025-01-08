@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1736341749891,
+      "tag": "0000_tranquil_hammerhead",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1736342436063,
+      "tag": "0001_icy_norrin_radd",
+      "breakpoints": true
+    }
+  ]
+}

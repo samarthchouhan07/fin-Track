@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:generate":"drizzle-kit generate:pg --schema db/schema.ts --out ./drizzle",
+    "db:migrate":"bun ./scripts/migrate.ts",
+    "db:studio":"drizzle-kit studio"
   },
   "dependencies": {
     "@clerk/backend": "^1.21.4",
@@ -14,6 +17,7 @@
     "@hono/clerk-auth": "^2.0.0",
     "@hono/zod-validator": "^0.4.2",
     "@hookform/resolvers": "^3.9.1",
+    "@neondatabase/serverless": "^0.10.4",
     "@radix-ui/react-accordion": "^1.2.2",
     "@radix-ui/react-alert-dialog": "^1.1.4",
     "@radix-ui/react-aspect-ratio": "^1.1.1",
@@ -41,16 +45,19 @@
     "@radix-ui/react-toggle": "^1.1.1",
     "@radix-ui/react-toggle-group": "^1.1.1",
     "@radix-ui/react-tooltip": "^1.1.6",
+    "@types/pg": "^8.11.10",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.0.0",
     "date-fns": "^4.1.0",
+    "drizzle-orm": "0.30.10",
     "embla-carousel-react": "^8.5.1",
     "hono": "^4.6.16",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.469.0",
     "next": "14.2.7",
     "next-themes": "^0.4.4",
+    "pg": "^8.13.1",
     "react": "^18",
     "react-day-picker": "8.10.1",
     "react-dom": "^18",
@@ -65,13 +72,15 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "dotenv": "^16.4.7",
+    "drizzle-kit": "0.20.17",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.7",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.7"
+    "typescript": "^5"
   }
 }

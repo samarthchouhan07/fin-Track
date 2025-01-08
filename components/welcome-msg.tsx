@@ -15,5 +15,4 @@ export const WelcomeMsg=()=>{
             </p>
         </div>
     )
-
 }
