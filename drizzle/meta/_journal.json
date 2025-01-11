@@ -15,6 +15,13 @@
       "when": 1736342436063,
       "tag": "0001_icy_norrin_radd",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1736615256444,
+      "tag": "0002_empty_marvel_boy",
+      "breakpoints": true
     }
   ]
 }
