@@ -151,6 +151,43 @@ const app = new Hono()
     }
   )
   .post(
+    "/bulk-create",
+    clerkMiddleware(),
+    zValidator(
+      "json",
+      z.array(
+        insertTransactionSchema.omit({
+          id: true,
+        })
+      )
+    ),
+    async (c) => {
+      const auth = getAuth(c);
+      const values = c.req.valid("json");
+
+      if (!auth?.userId) {
+        return c.json(
+          {
+            error: "Unauthorized",
+          },
+          401
+        );
+      }
+
+      const data = await db
+        .insert(transactions)
+        .values(
+          values.map((value) => ({
+            id: createId(),
+            ...value,
+          }))
+        )
+        .returning();
+
+      return c.json({ data });
+    }
+  )
+  .post(
     "/bulk-delete",
     clerkMiddleware(),
     zValidator(
@@ -307,17 +344,19 @@ const app = new Hono()
           .where(and(eq(transactions.id, id), eq(accounts.userId, auth.userId)))
       );
 
-      const [data] = await db.with(transactionsToDelete)
+      const [data] = await db
+        .with(transactionsToDelete)
         .delete(transactions)
         .where(
           inArray(
-            transactions.id,sql`(select id from ${transactionsToDelete})`
+            transactions.id,
+            sql`(select id from ${transactionsToDelete})`
           )
         )
         .returning({
-          id:transactions.id
-        })
-        
+          id: transactions.id,
+        });
+
       if (!data) {
         return c.json(
           {
