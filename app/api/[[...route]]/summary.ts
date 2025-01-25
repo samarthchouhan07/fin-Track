@@ -90,8 +90,8 @@ const app = new Hono().get(
 
     const [lastPeriod] = await fetchFinancialData(
       auth.userId,
-      startDate,
-      endDate
+      lastPeriodStart,
+      lastPeriodEnd
     );
     console.log("got hit 7");
 
@@ -104,11 +104,14 @@ const app = new Hono().get(
       currentPeriod.expenses,
       lastPeriod.expenses
     );
+    console.log(currentPeriod)
+    console.log(lastPeriod)
 
     const remainingChange = calculatePercentageChange(
       currentPeriod.remaining,
       lastPeriod.remaining
     );
+    console.log(remainingChange)
     console.log("got hit 8");
 
     const category = await db
@@ -156,7 +159,7 @@ const app = new Hono().get(
             Number
           ),
         expenses:
-          sql`SUM(CASE WHEN ${transactions.amount} < 0 THEN ${transactions.amount} ELSE 0 END)`.mapWith(
+          sql`SUM(CASE WHEN ${transactions.amount} < 0 THEN ABS(${transactions.amount}) ELSE 0 END)`.mapWith(
             Number
           ),
       })
